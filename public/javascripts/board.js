@@ -6,11 +6,11 @@
 	
 	Board.prototype = {
 		get: function(x, y) {
-			return this.grid[y][x]
+			return this.grid[y][x];
 		},
 		
 		set: function(x, y, mark) {
-			
+			this.grid[y][x] = mark;
 		}
 		
 	};
