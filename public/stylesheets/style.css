@@ -1,0 +1,15 @@
+.row {
+	display: table;
+	width: 350px;
+	height: 120px;
+	border: 1px solid black;
+}
+
+.cell {
+	position: relative;
+	display: inline-block;
+	float: left;
+	height: 100%;
+	width: 32%;
+	border: 1px solid black;
+}

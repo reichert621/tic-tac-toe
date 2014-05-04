@@ -8,7 +8,8 @@
 	
 	Game.prototype = {
 		run: function() {
-			alert("Starting game!")
+			this.players = { "x": new this.p1(this, "x"), "o": new this.p2(this, "o") };
+			this.board = new TTT.Board();
 		}
 		
 	};
