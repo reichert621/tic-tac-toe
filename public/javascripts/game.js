@@ -1,10 +1,9 @@
 (function(root) {
 	var TTT = root.TTT = ( root.TTT || {} );
 	
-	var Game = TTT.Game = function(player1, player2) {
+	var Game = TTT.Game = function() {
 		this.board = new TTT.Board();
 		this.player = (id === 1) ? new TTT.Player("x", this) : new TTT.Player("o", this);
-		// this.players = { "x": new player1("x", this), "o": new player2("o", this) };
 		this.turn = "x";
 	
 		var game = this;
@@ -21,16 +20,19 @@
 				this.board.set(x, y, mark);
 				var $cell = $(".cell[data-row='"+y+"'][data-col='"+x+"']");
 				$cell.html(mark);
-				var won = this.board.won();
-				var draw = this.board.draw();
-				if (won) {
-					$('body').html(won + " wins!");
-				} else if (draw) {
-					$('body').html("draw!");
-				}
+				this.checkGameOver();
 				this.turn = (mark === "x") ? "o" : "x";
-				
 				socket.emit('alertMark', { x: x, y: y, mark: mark });
+			}
+		},
+		
+		checkGameOver: function() {
+			var won = this.board.won();
+			var draw = this.board.draw();
+			if (won) {
+				$('body').html(won + " wins!");
+			} else if (draw) {
+				$('body').html("draw!");
 			}
 		},
 		
