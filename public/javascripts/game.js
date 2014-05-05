@@ -3,9 +3,9 @@
 	
 	var Game = TTT.Game = function() {
 		this.board = new TTT.Board();
-		this.player = (id === 1) ? new TTT.Player("x", this) : new TTT.Player("o", this);
+		this.player = (id === 0) ? new TTT.Player("x", this) : new TTT.Player("o", this);
 		this.turn = "x";
-	
+		
 		var game = this;
 		socket.on('mark', function(data) {
 			game.makeMove(data.x, data.y, data.mark);

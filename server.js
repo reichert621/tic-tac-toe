@@ -15,18 +15,28 @@ app.get('/', function(req, res) {
 	res.sendfile(__dirname + '/index.html');
 });
 
-var id = 0
+
+
 //websockets
+var players = [];
+
 io.sockets.on('connection', function(socket) {
-	id++;
-	socket.emit('receive', { id: id });
+	var player = socket.id;
+	players.push(player);
+	var id = players.indexOf(player)
+
+	socket.emit('receive', { id: id, misc: players });
 	
 	socket.on('alertMark', function(data) {
 		socket.broadcast.emit('mark', data);
 	});
 	
-	if (id === 2) { 
+	if (players.length === 2) { 
 		io.sockets.emit('startGame', { message: 'Have fun!' });
 	}
+	
+	socket.on('disconnect', function() {
+		players.splice(id, 1);
+	})
 
 });
