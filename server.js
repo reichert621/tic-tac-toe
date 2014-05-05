@@ -36,7 +36,7 @@ io.sockets.on('connection', function(socket) {
 	}
 	
 	socket.on('disconnect', function() {
-		players.splice(id, 1);
+		players.length = 0;
 	})
 
 });
