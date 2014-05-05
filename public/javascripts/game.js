@@ -2,14 +2,13 @@
 	var TTT = root.TTT = ( root.TTT || {} );
 	
 	var Game = TTT.Game = function(player1, player2) {
-		this.socket = io.connect();
-	
 		this.board = new TTT.Board();
-		this.players = { "x": new player1("x", this), "o": new player2("o", this) };
+		this.player = (id === 1) ? new TTT.Player("x", this) : new TTT.Player("o", this);
+		// this.players = { "x": new player1("x", this), "o": new player2("o", this) };
 		this.turn = "x";
 	
 		var game = this;
-		this.socket.on('mark', function(data) {
+		socket.on('mark', function(data) {
 			game.makeMove(data.x, data.y, data.mark);
 		});
 		
@@ -31,7 +30,7 @@
 				}
 				this.turn = (mark === "x") ? "o" : "x";
 				
-				this.socket.emit('alertMark', { x: x, y: y, mark: mark });
+				socket.emit('alertMark', { x: x, y: y, mark: mark });
 			}
 		},
 		

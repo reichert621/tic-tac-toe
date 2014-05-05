@@ -34,7 +34,16 @@
 	<script src="javascripts/player.js"></script>
 
 	<script>
-		new TTT.Game(TTT.Player, TTT.Player);
+		var socket = io.connect();
+		var id;
+		
+		socket.on('receive', function(data) {
+			id = data.id;
+		});
+		
+		socket.on('startGame', function() {
+			new TTT.Game(TTT.Player, TTT.Player);
+		})
 	</script>
 </body>
 </html>
