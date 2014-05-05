@@ -7,7 +7,7 @@
 			$cell = $(this);
 			var y = $cell.data('row');
 			var x = $cell.data('col');
-			if (game.open(x, y)) { game.set(x, y, mark); }
+			if (game.turn === mark && game.open(x, y)) { game.makeMove(x, y, mark); }
 		});
 	};
 	

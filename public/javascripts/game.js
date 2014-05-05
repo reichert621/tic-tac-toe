@@ -1,5 +1,7 @@
 (function(root) {
 	var TTT = root.TTT = ( root.TTT || {} );
+	var socket = io.connect();
+	
 	var Game = TTT.Game = function(player1, player2) {
 		this.board = new TTT.Board();
 		this.players = { "x": new player1("x", this), "o": new player2("o", this) };
@@ -12,7 +14,7 @@
 			// this.players[this.turn].move();
 		},
 		
-		set: function(x, y, mark) {
+		makeMove: function(x, y, mark) {
 			if (mark === this.turn) {
 				this.board.set(x, y, mark);
 				var $cell = $(".cell[data-row='"+y+"'][data-col='"+x+"']");
@@ -25,6 +27,7 @@
 					$('body').html("draw!");
 				}
 				this.turn = (mark === "x") ? "o" : "x";
+				socket.emit('mark', { x: x, y: y, mark: mark });
 				// this.players[this.turn].move();
 			}
 		},
