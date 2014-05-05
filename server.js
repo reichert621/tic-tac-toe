@@ -15,13 +15,14 @@ app.get('/', function(req, res) {
   res.sendfile(__dirname + '/index.html');
 });
 
-
+var id = 0
 //websockets
 io.sockets.on('connection', function(socket) {
-  socket.emit('receive', { welcome: 'connected!' });
+	id++;
+  socket.emit('receive', { welcome: 'guest' + id + ' connected!' });
 	
-	socket.on('mark', function(data) {
-		console.log(data);
+	socket.on('alertMark', function(data) {
 		socket.broadcast.emit('mark', data);
 	});
+
 });
