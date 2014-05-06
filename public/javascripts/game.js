@@ -5,7 +5,13 @@
 		this.board = new TTT.Board();
 		this.player = (id === 0) ? new TTT.Player("x", this) : new TTT.Player("o", this);
 		this.turn = "x";
-		$('#messages').html(this.turn + "'s move!");
+		this.alertMove();
+		$('.new-game').on('click', function(event) {
+			$('.cell').empty();
+			this.board = new TTT.Board();
+			this.turn = "o";
+		});
+		
 		var game = this;
 		socket.on('mark', function(data) {
 			game.makeMove(data.x, data.y, data.mark);
@@ -19,7 +25,7 @@
 			if (mark === this.turn && !this.checkGameOver()) {
 				this.board.set(x, y, mark);
 				var $cell = $(".cell[data-row='"+y+"'][data-col='"+x+"']");
-				$cell.html(mark);
+				$cell.html(mark).addClass(mark);
 				if (!this.checkGameOver()) {
 					this.swapTurn();
 				}
@@ -32,7 +38,7 @@
 			var draw = this.board.draw();
 
 			if (won) {
-				$('#messages').html(won + " wins!");
+				$('#messages').html(won.toUpperCase() + " wins!").addClass('x');
 				return true;
 			} else if (draw) {
 				$('#messages').html("draw!");
@@ -43,6 +49,10 @@
 		
 		swapTurn: function() {
 			this.turn = (this.turn === "x") ? "o" : "x";
+			this.alertMove();
+		},
+		
+		alertMove: function() {
 			var move = (this.player.mark === this.turn) ? "Your move!" : "Wait..."
 			$('#messages').html(move);
 		},

@@ -1,4 +1,16 @@
+
+body {
+	text-align: center;
+	font-size: 20px;
+	background-color: #D0D0D0;
+}
+
+#board {
+	margin: 10px;
+}
+
 .row {
+	margin: 0 auto;
 	display: table;
 	width: 350px;
 	height: 120px;
@@ -7,8 +19,25 @@
 .cell {
 	position: relative;
 	display: inline-block;
+	background-color: #fff;
+	font-size: 70px;
 	float: left;
 	height: 100%;
 	width: 32%;
 	border: 1px solid black;
+	border-radius: 2px;
+	margin: 2px 1px;
+}
+
+.x {
+	color: #428bca;
+}
+
+.o {
+	color: #ff8484;
+}
+
+.new-game {
+	font-size: 18px;
+	padding: 6px 18px;
 }
