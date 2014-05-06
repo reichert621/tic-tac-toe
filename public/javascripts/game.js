@@ -6,11 +6,6 @@
 		this.player = (id === 0) ? new TTT.Player("x", this) : new TTT.Player("o", this);
 		this.turn = "x";
 		this.alertMove();
-		$('.new-game').on('click', function(event) {
-			$('.cell').empty();
-			this.board = new TTT.Board();
-			this.turn = "o";
-		});
 		
 		var game = this;
 		socket.on('mark', function(data) {

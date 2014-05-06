@@ -41,7 +41,7 @@
 		checkHoriz: function(grid) {
 			for (var i = 0; i < 3; i++) {
 				var row = grid[i];
-				if (row[0] === row[1] && row[1] === row[2]) { return row[0] }
+				if (row[0] !== null && row[0] === row[1] && row[1] === row[2]) { return row[0] }
 			}
 		},
 		
