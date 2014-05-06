@@ -34,7 +34,6 @@
 		
 		makeMove: function(x, y, mark) {
 			if (mark === this.turn && !this.checkGameOver()) {
-				alert(mark);
 				this.board.set(x, y, mark);
 				var $cell = $(".cell[data-row='"+y+"'][data-col='"+x+"']");
 				$cell.html(mark).addClass(mark);
