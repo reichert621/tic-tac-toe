@@ -35,6 +35,10 @@ io.sockets.on('connection', function(socket) {
 		io.sockets.emit('startGame', { message: 'Have fun!' });
 	}
 	
+	socket.on('alertNewGame', function(data) {
+		socket.broadcast.emit('newGame', data);
+	});
+	
 	socket.on('disconnect', function() {
 		players.length = 0;
 	})

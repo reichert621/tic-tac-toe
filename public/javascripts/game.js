@@ -8,16 +8,33 @@
 		this.alertMove();
 		
 		var game = this;
+		$('.new-game').on('click', function(event) {
+			game.newGame();
+			socket.emit('alertNewGame', { message: "New game!" });
+		});
+		
 		socket.on('mark', function(data) {
 			game.makeMove(data.x, data.y, data.mark);
+		});
+		
+		socket.on('newGame', function(data) {
+			game.newGame();
 		});
 		
 	};
 	
 	Game.prototype = {
 		
+		newGame: function() {
+			$('.cell').empty().removeClass('x o');
+			this.board = new TTT.Board();
+			this.turn = "o";
+			this.alertMove();
+		},
+		
 		makeMove: function(x, y, mark) {
 			if (mark === this.turn && !this.checkGameOver()) {
+				alert(mark);
 				this.board.set(x, y, mark);
 				var $cell = $(".cell[data-row='"+y+"'][data-col='"+x+"']");
 				$cell.html(mark).addClass(mark);
