@@ -1,23 +1,25 @@
 (function(root) {
 	var TTT = root.TTT = ( root.TTT || {} );
 	
-	var Game = TTT.Game = function() {
+	var Game = TTT.Game = function(options) {
 		this.board = new TTT.Board();
-		this.player = (id === 0) ? new TTT.Player("x", this) : new TTT.Player("o", this);
+		this.socket = options.socket
+		this.player = (options.id === 0) ? new TTT.Player("x", this) : new TTT.Player("o", this);
 		this.turn = "x";
 		this.alertMove();
 		
 		var game = this;
+		
 		$('.new-game').on('click', function(event) {
 			game.newGame();
-			socket.emit('alertNewGame', { message: "New game!" });
+			game.socket.emit('alertNewGame', { message: "New game!" });
 		});
 		
-		socket.on('mark', function(data) {
+		this.socket.on('mark', function(data) {
 			game.makeMove(data.x, data.y, data.mark);
 		});
 		
-		socket.on('newGame', function(data) {
+		this.socket.on('newGame', function(data) {
 			game.newGame();
 		});
 		
@@ -27,8 +29,9 @@
 		
 		newGame: function() {
 			$('.cell').empty().removeClass('x o');
+			$('#messages').removeClass('x o');
 			this.board = new TTT.Board();
-			this.turn = "o";
+			this.swapTurn();
 			this.alertMove();
 		},
 		
@@ -40,7 +43,7 @@
 				if (!this.checkGameOver()) {
 					this.swapTurn();
 				}
-				socket.emit('alertMark', { x: x, y: y, mark: mark });
+				this.socket.emit('alertMark', { x: x, y: y, mark: mark });
 			}
 		},
 		
@@ -49,7 +52,7 @@
 			var draw = this.board.draw();
 
 			if (won) {
-				$('#messages').html(won.toUpperCase() + " wins!").addClass('x');
+				$('#messages').html(won.toUpperCase() + " wins!").addClass(this.turn);
 				return true;
 			} else if (draw) {
 				$('#messages').html("draw!");

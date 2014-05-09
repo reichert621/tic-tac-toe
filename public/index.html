@@ -8,7 +8,12 @@
 <body>
   <h1>Tic Tac Toe</h1>
 	
-	<div id="messages">Waiting for other player to connect...</div>
+	<div id="options">
+		<button class="connect btn btn-success">Find player</button> 
+		<button class="human btn btn-primary">Play human</button> 
+		<button class="computer btn btn-danger">Play computer</button>
+	</div>
+	<div id="messages"></div>
 	
 	<div id="board">
 		<div class="row">
@@ -39,16 +44,20 @@
 	<script src="javascripts/player.js"></script>
 
 	<script>
+	$('.connect').on('click', function() {
 		var socket = io.connect();
 		var id;
+		
+		$('#messages').html("Waiting for other player to connect...");
 
 		socket.on('receive', function(data) {
 			id = data.id;
 		});
 		
 		socket.on('startGame', function() {
-			new TTT.Game();
+			new TTT.Game({id: id, socket: socket});
 		})
+	});
 	</script>
 </body>
 </html>
