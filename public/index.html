@@ -44,6 +44,10 @@
 	<script src="javascripts/player.js"></script>
 
 	<script>
+	$('.human').on('click', function() {
+		game = new TTT.Game({ player: 'human' });
+	});
+	
 	$('.connect').on('click', function() {
 		var socket = io.connect();
 		var id;
@@ -55,7 +59,7 @@
 		});
 		
 		socket.on('startGame', function() {
-			new TTT.Game({id: id, socket: socket});
+			game = new TTT.Game({ id: id, socket: socket });
 		})
 	});
 	</script>
